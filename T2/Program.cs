@@ -49,6 +49,7 @@ namespace T2
                 parser.Start(returnedSymbol);
             }
 
+            Console.WriteLine("wyrażenie poprawne");
             Console.ReadKey();
         }
     }
