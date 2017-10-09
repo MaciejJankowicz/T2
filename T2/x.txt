@@ -1,0 +1,43 @@
+public FoundSymbol GetNextSymbol()
+        {
+            if (currentText.Length <= 0)
+            {
+                return new FoundSymbol { type = SpecialMatchTypes["end"], content = "" };
+            }
+
+            SymbolType lastSymbolFound = null;
+            SymbolType SymbolFound = null;
+            //bool isFinished = false;
+            string currentFragment = "";
+            int fragmentLength;
+            do
+            {
+                lastSymbolFound = SymbolFound;
+                SymbolFound = null;
+                fragmentLength = currentFragment.Length + 1;
+                if (fragmentLength > currentText.Length)
+                {
+                    break;                   
+                }
+                currentFragment = currentText.Substring(0, fragmentLength);
+
+                foreach (var type in MatchTypes)
+                {
+                    var match = Regex.Match(currentFragment, type.Regex);
+                    if (match.Success)
+                    {
+                        SymbolFound = type;
+                    }
+                }
+
+            }
+            while (SymbolFound != null);
+
+            currentText = currentText.Substring(fragmentLength - 1);
+            if (lastSymbolFound == null)
+            {
+                return new FoundSymbol {type = SpecialMatchTypes["err"], content = currentFragment.Substring(0, currentFragment.Length -1) };
+            }
+            return new FoundSymbol { type = lastSymbolFound, content = currentFragment.Substring(0, fragmentLength - 1) };
+
+        }
