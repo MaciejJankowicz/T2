@@ -33,12 +33,13 @@ namespace T2
             if (Current.type.Type == "koniec")
             {
                 isEnd = true;
-            }
+            } 
         }
         private void Accept(string expected)
         {
             if (expected == Current.type.Type)
             {
+                Console.WriteLine(string.Format("{0} -> {1}", Current.type.Type, Current.content));
                 Next();
             }
             else
@@ -95,7 +96,7 @@ namespace T2
                 Accept("ukośnik");
                 Cz();
                 RS();
-            } else {}
+            } else { }
         }
 
         private void RW()
